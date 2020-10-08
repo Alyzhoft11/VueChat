@@ -5,6 +5,11 @@ export class User {
   @Field()
   id: string;
 
-  @Field({ nullable: true })
+  @Field()
   userName: string;
+
+  @Field()
+  email: string;
+
+  password: string;
 }

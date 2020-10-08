@@ -19,8 +19,8 @@ export class UserResolver {
   }
 
   @Mutation(() => User)
-  async addUser(@Arg('userName') userName: string): Promise<User> {
-    const user = new Users({ userName });
+  async createUser(@Arg('userName') userName: string, @Arg('password') password: string, @Arg('email') email: string): Promise<User> {
+    const user = new Users({ userName, password, email });
     return await user.save();
   }
 

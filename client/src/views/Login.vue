@@ -16,7 +16,7 @@
         </div>
         <div class="flex justify-center mt-2">
           <p class=" text-lg">
-            Don't have an account? <span><a class=" text-red-900 text-xl hover:underline" @click="$router.push('signup')">Sign Up</a></span>
+            Don't have an account? <span><a class=" text-red-900 text-xl cursor-pointer hover:underline" @click="$router.push('signup')">Sign Up</a></span>
           </p>
         </div>
       </form>

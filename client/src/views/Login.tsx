@@ -1,7 +1,21 @@
 import React from 'react';
 import { Link } from '@reach/router';
+import { useQuery, gql } from '@apollo/client';
+
+const USER = gql`
+  query test {
+    userByUserName(userName: "Alex") {
+      id
+      userName
+    }
+  }
+`;
 
 function Login() {
+  const { loading, error, data } = useQuery(USER);
+
+  console.log(data);
+
   return (
     <div className="flex justify-center my-16">
       <div className="bg-white shadow-md sm:w-5/6 md:w-5/6 lg:w-1/4 xl:w-1/4 h-l rounded-md">

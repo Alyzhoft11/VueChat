@@ -2,6 +2,7 @@ import 'reflect-metadata';
 import express from 'express';
 import mongoose from 'mongoose';
 import { ApolloServer } from 'apollo-server-express';
+import cors from 'cors'
 import path from 'path';
 import { buildSchema } from 'type-graphql';
 import { UserResolver } from '../Resolvers/userResolver';
@@ -9,6 +10,8 @@ import { MessageResolver } from '../Resolvers/messageResolver';
 
 const startServer = async () => {
   const app = express();
+
+  app.use(cors())
 
   const schema = await buildSchema({
     resolvers: [UserResolver, MessageResolver],

@@ -12,11 +12,14 @@
           <input class="rounded-md px-2 mt-5 bg-gray-200 w-4/6 h-10" type="password" placeholder="Password" />
         </div>
         <div class="flex justify-center">
-          <button class="bg-red-900 rounded-md px-2 mt-5 w-4/6 h-10 text-white text-xl font-bold">Login</button>
+          <button class="bg-red-900 rounded-md px-2 mt-5 w-4/6 h-10 text-white text-xl font-bold">
+            Login
+          </button>
         </div>
         <div class="flex justify-center mt-2">
           <p class=" text-lg">
-            Don't have an account? <span><a class=" text-red-900 text-xl cursor-pointer hover:underline" @click="$router.push('signup')">Sign Up</a></span>
+            Don't have an account?
+            <span><a class=" text-red-900 text-xl cursor-pointer hover:underline" @click="$router.push('signup')">Sign Up</a></span>
           </p>
         </div>
       </form>
@@ -24,7 +27,7 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
 export default {
   name: 'Login',
 };

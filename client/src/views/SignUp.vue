@@ -15,14 +15,16 @@
           <input class="rounded-md px-2 mt-5 bg-gray-200 w-4/6 h-10" type="password" placeholder="Password" />
         </div>
         <div class="flex justify-center">
-          <button class="bg-red-900 rounded-md px-2 mt-5 w-4/6 h-10 text-white text-xl font-bold">Sign Up</button>
+          <button class="bg-red-900 rounded-md px-2 mt-5 w-4/6 h-10 text-white text-xl font-bold">
+            Sign Up
+          </button>
         </div>
       </form>
     </div>
   </div>
 </template>
 
-<script lang="ts">
+<script>
 export default {
   name: 'Sign Up',
 };

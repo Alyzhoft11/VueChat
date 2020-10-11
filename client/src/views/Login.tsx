@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from '@reach/router';
 import { useQuery, gql } from '@apollo/client';
+import { useStoreState } from 'easy-peasy';
 
 const USER = gql`
   query test {
@@ -12,9 +13,9 @@ const USER = gql`
 `;
 
 function Login() {
-  const { loading, error, data } = useQuery(USER);
+  const user = useStoreState((state) => state.user);
 
-  console.log(data);
+  console.log(user);
 
   return (
     <div className="flex justify-center my-16">

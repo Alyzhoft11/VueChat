@@ -5,8 +5,11 @@ import Users from '../MongoSchemas/Users';
 @Resolver()
 export class UserResolver {
   @Query(() => User, { nullable: true })
-  async userByUserName(@Arg('userName') userName: string): Promise<User | undefined | null> {
-    const user = await Users.findOne({ userName });
+  async userByUserName(
+    @Arg('userName') userName: string,
+    @Arg('password') password: string
+    ): Promise<User | undefined | null> {
+    const user = await Users.findOne({ userName, password });
 
     return user;
   }

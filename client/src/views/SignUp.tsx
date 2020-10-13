@@ -1,5 +1,7 @@
 import React from 'react';
 import { gql, useMutation } from '@apollo/client';
+import { useStoreActions } from 'easy-peasy';
+import { navigate } from '@reach/router';
 
 const CREATE_USER = gql`
   mutation CreateUser($userName: String!, $password: String!, $email: String!) {
@@ -16,7 +18,19 @@ function SignUp() {
   let password: HTMLInputElement | null;
   let email: HTMLInputElement | null;
 
-  const [createUser, { data }] = useMutation(CREATE_USER);
+  const setUser = useStoreActions<any, any>((actions) => actions.user.add);
+  const [createUser, { loading, data }] = useMutation(CREATE_USER);
+
+  console.log(data);
+
+  if (!loading) {
+    if (data != undefined) {
+      if (data.createUser != null) {
+        setUser(data.createUser.userName);
+        navigate('/');
+      }
+    }
+  }
 
   return (
     <div>

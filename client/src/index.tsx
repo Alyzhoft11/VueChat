@@ -5,8 +5,9 @@ import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import { StoreProvider } from 'easy-peasy';
 import './styles/tailwind.css';
 import store from './store/store';
-import Login from './views/Login';
+import Login from './components/Login';
 import SignUp from './views/SignUp';
+import Home from './views/Home';
 import Navbar from './components/Navbar';
 
 const client = new ApolloClient({
@@ -16,6 +17,7 @@ const client = new ApolloClient({
 
 let LoginRoute = (props: RouteComponentProps) => <Login />;
 let SignUpRoute = (props: RouteComponentProps) => <SignUp />;
+let HomeRoute = (props: RouteComponentProps) => <Home />;
 
 ReactDOM.render(
   <React.StrictMode>
@@ -23,7 +25,8 @@ ReactDOM.render(
       <StoreProvider store={store}>
         <Navbar />
         <Router>
-          <LoginRoute path="/" />
+          <HomeRoute path="/" />
+          <LoginRoute path="/login" />
           <SignUpRoute path="/signup" />
         </Router>
       </StoreProvider>

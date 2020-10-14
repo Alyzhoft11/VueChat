@@ -1,5 +1,6 @@
 import React from 'react';
 import Login from '../components/Login';
+import Channgels from '../components/Channels';
 import { useStoreState } from 'easy-peasy';
 
 function Home() {
@@ -9,7 +10,7 @@ function Home() {
   if (user.user.name != '') {
     isLoggedIn = true;
   }
-  return <div>{isLoggedIn ? <h1>Logged In {user.user.name}</h1> : <Login />}</div>;
+  return <div>{isLoggedIn ? <Channgels /> : <Login />}</div>;
 }
 
 export default Home;

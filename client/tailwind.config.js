@@ -28,6 +28,7 @@ module.exports = {
         l: '22rem',
         signup: '24rem',
         xl: '36rem',
+        channel: 'calc(100vh - 4.22rem)'
       },
     },
     variants: {},

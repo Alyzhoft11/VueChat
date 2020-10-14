@@ -23,7 +23,7 @@ ReactDOM.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
       <StoreProvider store={store}>
-        <Navbar />
+        {/* <Navbar /> */}
         <Router>
           <HomeRoute path="/" />
           <LoginRoute path="/login" />

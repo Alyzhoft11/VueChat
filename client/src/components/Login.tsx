@@ -24,14 +24,14 @@ function Login() {
   if (!loading) {
     if (data != undefined) {
       if (data.userByUserName != null) {
-        setUser(data.userByUserName.userName);
+        setUser(data.userByUserName);
       }
     }
   }
 
   return (
     <div className="flex justify-center my-16">
-      <div className="bg-white shadow-md sm:w-5/6 md:w-5/6 lg:w-1/4 xl:w-1/4 h-l rounded-md">
+      <div className="bg-white shadow-md sm:w-5/6 md:w-5/6 lg:w-2/4 xl:w-1/4 h-l rounded-md">
         <div className="flex justify-center">
           <h1 className="text-3xl font-bold mt-5">Account Login</h1>
         </div>

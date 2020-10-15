@@ -1,16 +1,18 @@
 import React from 'react';
 import Login from '../components/Login';
-import Channgels from '../components/Channels';
+import Servers from '../components/Servers';
 import { useStoreState } from 'easy-peasy';
 
 function Home() {
   const user = useStoreState((state) => state.user);
   let isLoggedIn = false;
 
-  if (user.user.name != '') {
+  console.log(user);
+
+  if (user.user.userName != '') {
     isLoggedIn = true;
   }
-  return <div>{isLoggedIn ? <Channgels /> : <Login />}</div>;
+  return <div>{isLoggedIn ? <Servers /> : <Login />}</div>;
 }
 
 export default Home;

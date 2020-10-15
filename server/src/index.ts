@@ -7,6 +7,7 @@ import path from 'path';
 import { buildSchema } from 'type-graphql';
 import { UserResolver } from '../Resolvers/userResolver';
 import { MessageResolver } from '../Resolvers/messageResolver';
+import { ServerResolver } from '../Resolvers/serverResolver'
 
 const startServer = async () => {
   const app = express();
@@ -14,7 +15,7 @@ const startServer = async () => {
   app.use(cors())
 
   const schema = await buildSchema({
-    resolvers: [UserResolver, MessageResolver],
+    resolvers: [UserResolver, MessageResolver, ServerResolver],
     emitSchemaFile: path.resolve(__dirname, 'schema.gql'),
   });
 

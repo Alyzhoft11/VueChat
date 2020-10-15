@@ -26,7 +26,7 @@ function SignUp() {
   if (!loading) {
     if (data != undefined) {
       if (data.createUser != null) {
-        setUser(data.createUser.userName);
+        setUser(data.createUser);
         navigate('/');
       }
     }

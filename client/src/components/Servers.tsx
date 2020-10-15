@@ -1,13 +1,20 @@
 import React from 'react';
+import Server from './Server';
 
 const channelHeight = {
-  height: 'calc(100vh - 4.22rem)',
+  height: 'calc(100vh - 3.25rem)',
 };
+
+const letters = ['a', 'b'];
 
 function Channels() {
   return (
     <div>
-      <div className=" min-h-screen shadow w-16 border-r-4 bg-gray-900 border-gray-900">
+      <div style={channelHeight} className=" shadow w-16 border-r-4 bg-gray-900 border-gray-900">
+        {letters.map((letter) => (
+          <Server letter={letter} />
+        ))}
+
         <div className="flex justify-center">
           <button className="mt-2 rounded-full h-12 w-12 bg-gray-800 outline-none text-red-900 hover:bg-red-900 hover:text-white">
             <div className="flex content-center justify-center">

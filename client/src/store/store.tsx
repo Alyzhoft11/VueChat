@@ -1,12 +1,14 @@
 import { Action, action, createStore } from 'easy-peasy';
 
 interface userObject {
-  name: string;
+  id: string;
+  userName: string;
+  email: string;
 }
 
 interface UserModel {
   user: userObject;
-  add: Action<UserModel, string>;
+  add: Action<UserModel, userObject>;
 }
 
 interface StoreModel {
@@ -15,10 +17,14 @@ interface StoreModel {
 
 const userModel: UserModel = {
   user: {
-    name: '',
+    id: '',
+    userName: '',
+    email: '',
   },
   add: action((state, payload) => {
-    state.user.name = payload;
+    state.user.id = payload.id;
+    state.user.userName = payload.userName;
+    state.user.email = payload.email;
   }),
 };
 

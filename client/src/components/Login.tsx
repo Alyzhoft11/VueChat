@@ -9,6 +9,7 @@ const USER = gql`
       id
       userName
       email
+      servers
     }
   }
 `;

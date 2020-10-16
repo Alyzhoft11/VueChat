@@ -4,10 +4,19 @@ interface userObject {
   id: string;
   userName: string;
   email: string;
+  servers: string[];
+}
+
+interface serverObject {
+  id: string;
+  serverName: string;
+  imageURL: string;
+  ownerId: string;
 }
 
 interface UserModel {
   user: userObject;
+  servers: serverObject[];
   add: Action<UserModel, userObject>;
 }
 
@@ -20,11 +29,14 @@ const userModel: UserModel = {
     id: '',
     userName: '',
     email: '',
+    servers: [],
   },
+  servers: [],
   add: action((state, payload) => {
     state.user.id = payload.id;
     state.user.userName = payload.userName;
     state.user.email = payload.email;
+    state.user.servers = payload.servers;
   }),
 };
 

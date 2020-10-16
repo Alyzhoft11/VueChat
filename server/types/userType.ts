@@ -1,9 +1,5 @@
 import { ObjectType, Field } from 'type-graphql';
 
-type Server = {
-  id: string
-}
-
 @ObjectType()
 export class User {
   @Field()
@@ -15,7 +11,7 @@ export class User {
   @Field()
   email: string;
 
-  @Field(() => [String])
+  @Field(type => [String])
   servers: string[]
 
   password: string;

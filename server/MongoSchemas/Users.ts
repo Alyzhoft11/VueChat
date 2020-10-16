@@ -1,5 +1,6 @@
 import mongoose, { Document } from 'mongoose';
 
+
 declare interface User extends Document {
   userName: string;
   password: string;

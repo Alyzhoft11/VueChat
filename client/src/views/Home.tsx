@@ -7,8 +7,6 @@ function Home() {
   const user = useStoreState((state) => state.user);
   let isLoggedIn = false;
 
-  console.log(user);
-
   if (user.user.userName != '') {
     isLoggedIn = true;
   }

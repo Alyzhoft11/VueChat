@@ -34,4 +34,16 @@ export class ServerResolver {
 
     return server
   }
+
+  @Mutation(() => Server)
+  async addChannel(
+    @Arg('serverId') serverId: string,
+    @Arg('channelName') channelName: string,
+  ): Promise<Server> {
+    const server = await Servers.findById(serverId)
+
+    server.channels.push({channelName: channelName})
+
+    return server
+  }
 }

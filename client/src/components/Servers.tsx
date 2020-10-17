@@ -32,11 +32,13 @@ function Servers() {
 
   const [showModal, setShowModal] = useState(false);
 
-  const { loading, data, refetch } = useQuery(SERVER, {
+  const { loading, data, error } = useQuery(SERVER, {
     variables: { id: serversIds },
   });
 
   if (loading) return <div>Loading</div>;
+
+  if (error) return <div>{error}</div>;
 
   console.log(data);
 
@@ -46,7 +48,6 @@ function Servers() {
       <CreateServer
         onClose={() => {
           setShowModal(false);
-          refetch();
         }}
       />
     );
@@ -59,7 +60,6 @@ function Servers() {
         {data.servers.map((server: any) => (
           <Server imageUrl={server.imageURL} key={server.id} />
         ))}
-
         <div className="flex justify-center">
           <button onClick={() => setShowModal(true)} className="mt-2 rounded-full h-12 w-12 bg-gray-800 outline-none text-red-900 hover:bg-red-900 hover:text-white">
             <div className="flex content-center justify-center">
@@ -69,6 +69,7 @@ function Servers() {
             </div>
           </button>
         </div>
+        /
       </div>
     </div>
   );

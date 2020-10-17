@@ -1,4 +1,5 @@
 import { ObjectType, Field } from 'type-graphql';
+import { Channels } from './channelsType'
 
 @ObjectType()
 export class Server {
@@ -13,4 +14,7 @@ export class Server {
 
   @Field()
   ownerId: string
+
+  @Field(type => [Channels])
+  channels: Channels[]
 }

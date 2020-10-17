@@ -21,8 +21,6 @@ function SignUp() {
   const setUser = useStoreActions<any, any>((actions) => actions.user.add);
   const [createUser, { loading, data }] = useMutation(CREATE_USER);
 
-  console.log(data);
-
   if (!loading) {
     if (data != undefined) {
       if (data.createUser != null) {

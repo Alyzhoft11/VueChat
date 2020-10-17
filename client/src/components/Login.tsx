@@ -46,6 +46,7 @@ function Login() {
         >
           <div className="flex justify-center">
             <input
+              autoFocus
               ref={(node) => {
                 userName = node;
               }}

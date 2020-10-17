@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useStoreState } from 'easy-peasy';
+import { useStoreActions, useStoreState } from 'easy-peasy';
 import { gql, useMutation } from '@apollo/client';
 
 type Props = {
@@ -19,11 +19,21 @@ const ADD_SERVER = gql`
 
 function CreateServer({ onClose }: Props) {
   const ownerId = useStoreState((state) => state.user.user.id);
+  const addServerState = useStoreActions<any, any>((actions) => actions.user.addServer);
 
   const [serverName, setServerName] = useState('');
   const [imageURL, setImageURL] = useState('');
 
   const [addServer, { loading, data }] = useMutation(ADD_SERVER);
+
+  if (!loading) {
+    console.log(loading);
+    if (data != undefined) {
+      addServerState(data.addServer);
+      console.log(data.addServer);
+      onClose();
+    }
+  }
 
   return (
     <>
@@ -48,14 +58,13 @@ function CreateServer({ onClose }: Props) {
 
                   setImageURL('');
                   setServerName('');
-                  onClose();
                 }}
               >
                 <div className="flex justify-center">
-                  <input onChange={(e) => setServerName(e.target.value)} className="rounded-md px-2 mt-10 bg-gray-200 w-4/6 h-10" type="text" placeholder="Server Name" />
+                  <input onChange={(e) => setServerName(e.target.value)} required autoFocus className="rounded-md px-2 mt-10 bg-gray-200 w-4/6 h-10" type="text" placeholder="Server Name" />
                 </div>
                 <div className="flex justify-center">
-                  <input onChange={(e) => setImageURL(e.target.value)} className="rounded-md px-2 mt-5 bg-gray-200 w-4/6 h-10" type="url" placeholder="Image Url" />
+                  <input onChange={(e) => setImageURL(e.target.value)} required className="rounded-md px-2 mt-5 bg-gray-200 w-4/6 h-10" type="url" placeholder="Image Url" />
                 </div>
                 <div className="flex justify-center">
                   <button type="submit" className="bg-red-900 rounded-md px-2 mt-5 w-4/6 h-10 text-white text-xl font-bold">

@@ -18,6 +18,7 @@ interface UserModel {
   user: userObject;
   servers: serverObject[];
   add: Action<UserModel, userObject>;
+  addServer: Action<UserModel, serverObject>;
 }
 
 interface StoreModel {
@@ -37,6 +38,9 @@ const userModel: UserModel = {
     state.user.userName = payload.userName;
     state.user.email = payload.email;
     state.user.servers = payload.servers;
+  }),
+  addServer: action((state, payload) => {
+    state.user.servers.push(payload.id);
   }),
 };
 

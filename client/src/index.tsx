@@ -20,17 +20,15 @@ let SignUpRoute = (props: RouteComponentProps) => <SignUp />;
 let HomeRoute = (props: RouteComponentProps) => <Home />;
 
 ReactDOM.render(
-  <React.StrictMode>
-    <ApolloProvider client={client}>
-      <StoreProvider store={store}>
-        <Navbar />
-        <Router>
-          <HomeRoute path="/" />
-          <LoginRoute path="/login" />
-          <SignUpRoute path="/signup" />
-        </Router>
-      </StoreProvider>
-    </ApolloProvider>
-  </React.StrictMode>,
+  <ApolloProvider client={client}>
+    <StoreProvider store={store}>
+      <Navbar />
+      <Router>
+        <HomeRoute path="/" />
+        <LoginRoute path="/login" />
+        <SignUpRoute path="/signup" />
+      </Router>
+    </StoreProvider>
+  </ApolloProvider>,
   document.getElementById('root'),
 );

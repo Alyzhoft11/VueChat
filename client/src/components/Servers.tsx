@@ -3,6 +3,7 @@ import { gql, useMutation, useQuery } from '@apollo/client';
 import { useStoreActions, useStoreState } from 'easy-peasy';
 import CreateServer from './CreateServer';
 import Server from './Server';
+import { removeFragmentSpreadFromDocument } from '@apollo/client/utilities';
 
 type Props = {
   onClose(): void;
@@ -26,26 +27,34 @@ const SERVER = gql`
 `;
 
 function Servers() {
-  const servers = useStoreState((state) => state.user.user.servers);
+  const serversIds = useStoreState((state) => state.user.user.servers);
+  const addServerState = useStoreActions<any, any>((actions) => actions.user.addServer);
 
   const [showModal, setShowModal] = useState(false);
 
-  const { loading, data } = useQuery(SERVER, {
-    variables: { id: servers },
+  const { loading, data, refetch } = useQuery(SERVER, {
+    variables: { id: serversIds },
   });
 
   if (loading) return <div>Loading</div>;
 
   console.log(data);
 
-  let test: any;
+  let modal: any;
   if (showModal) {
-    test = <CreateServer onClose={() => setShowModal(false)} />;
+    modal = (
+      <CreateServer
+        onClose={() => {
+          setShowModal(false);
+          refetch();
+        }}
+      />
+    );
   }
 
   return (
     <div className="relative">
-      {test}
+      {modal}
       <div style={channelHeight} className=" shadow w-16 border-r-4 bg-gray-900 border-gray-900">
         {data.servers.map((server: any) => (
           <Server imageUrl={server.imageURL} key={server.id} />

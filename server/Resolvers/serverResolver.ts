@@ -44,6 +44,8 @@ export class ServerResolver {
 
     server.channels.push({channelName: channelName})
 
+    await server.save()
+
     return server
   }
 }

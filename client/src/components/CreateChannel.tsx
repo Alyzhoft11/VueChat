@@ -38,9 +38,9 @@ function CreateChannel({ onClose }: Props) {
 
   return (
     <>
-      <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+      <div className="justify-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
         <div className=" sm:w-5/6 md:w-5/6 lg:w-2/4 xl:w-1/4 my-2 mx-auto ">
-          <div className="flex justify-center">
+          <div className="flex justify-center mt-32">
             <div className="bg-white shadow-md w-full h-64 rounded-md">
               <div className="flex justify-end mt-4 mr-4">
                 <button onClick={onClose} className="outline-none hover:text-red-900">

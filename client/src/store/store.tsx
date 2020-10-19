@@ -23,10 +23,12 @@ interface UserModel {
   user: userObject;
   servers: serverObject[];
   selectedServer: string;
+  selectedChannel: string;
   add: Action<UserModel, userObject>;
   addServer: Action<UserModel, serverObject>;
   setServers: Action<UserModel, serverObject[]>;
   setSelectedServer: Action<UserModel, string>;
+  setSelectedChannel: Action<UserModel, string>;
 }
 
 interface StoreModel {
@@ -42,6 +44,7 @@ const userModel: UserModel = {
   },
   servers: [],
   selectedServer: '',
+  selectedChannel: '',
   add: action((state, payload) => {
     state.user.id = payload.id;
     state.user.userName = payload.userName;
@@ -56,6 +59,9 @@ const userModel: UserModel = {
   }),
   setSelectedServer: action((state, payload) => {
     state.selectedServer = payload;
+  }),
+  setSelectedChannel: action((state, payload) => {
+    state.selectedChannel = payload;
   }),
 };
 

@@ -24,15 +24,17 @@ function CreateServer({ onClose }: Props) {
   const [serverName, setServerName] = useState('');
   const [imageURL, setImageURL] = useState('');
 
-  const [addServer, { loading, data }] = useMutation(ADD_SERVER);
+  const [addServer, { loading, data, error }] = useMutation(ADD_SERVER);
 
   if (!loading) {
-    console.log(loading);
     if (data != undefined) {
       addServerState(data.addServer);
-      console.log(data.addServer);
       onClose();
     }
+  }
+
+  if (error) {
+    return <div>Error</div>;
   }
 
   return (

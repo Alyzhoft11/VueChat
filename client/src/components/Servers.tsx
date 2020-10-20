@@ -60,7 +60,7 @@ function Servers() {
   return (
     <div className="relative">
       {modal}
-      <div style={channelHeight} className=" shadow w-16 border-r-4 bg-gray-900 border-gray-900">
+      <div style={channelHeight} className=" shadow-xl w-16 border-r-4 bg-gray-900 border-gray-900">
         {data.servers.map((server: any) => {
           if (!selectedServer) {
             setSelectedServer(data.servers[0].id);

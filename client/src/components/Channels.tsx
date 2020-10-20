@@ -33,7 +33,7 @@ function Channels() {
   return (
     <>
       {modal}
-      <div className="bg-gray-800 w-56">
+      <div className="bg-gray-800 w-1/4 shadow-md">
         <div className="flex justify-end mt-1 mr-4">
           <button onClick={() => setShowModal(true)} className="outline-none hover:text-red-900">
             <svg className="w-8 h-8  fill-current" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">

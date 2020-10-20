@@ -40,7 +40,7 @@ const userModel: UserModel = {
     id: '',
     userName: '',
     email: '',
-    servers: [],
+    servers: [''],
   },
   servers: [],
   selectedServer: '',

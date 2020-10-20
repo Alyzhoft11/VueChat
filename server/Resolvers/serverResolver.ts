@@ -1,5 +1,7 @@
 import { Arg, Mutation, Query, Resolver } from 'type-graphql';
 import { Server } from '../types/serverType';
+import { Channels } from '../types/channelsType';
+import { Message } from '../types/messageType';
 import Servers from '../MongoSchemas/Servers';
 import Users from '../MongoSchemas/Users';
 
@@ -42,10 +44,60 @@ export class ServerResolver {
   ): Promise<Server> {
     const server = await Servers.findById(serverId)
 
-    server.channels.push({channelName: channelName})
+    server.channels.push({
+      channelName: channelName,
+      messages: []
+    })
 
     await server.save()
 
     return server
+  }
+
+  @Query(() => Channels)
+  async getMessages(
+    @Arg('serverId') serverId: string,
+    @Arg('channelName') channelName: string
+  ): Promise<Channels> {
+    const server = await Servers.findById(serverId)
+
+    const channel = server.channels.find((c: any) => c.channelName === channelName)
+
+    return channel
+  }
+
+  @Mutation(() => Message)
+  async addMessage(
+    @Arg('serverId') serverId: string,
+    @Arg('channelName') channelName: string,
+    @Arg('userId') userId: string,
+    @Arg('userName') userName: string,
+    @Arg('text') text: string,
+    @Arg('date') date: string,
+    @Arg('time') time: string
+  ): Promise<Message> {
+    const server = await Servers.findById(serverId)
+
+    server.channels.find((c: any) => c.channelName === channelName).messages.push({
+      userName,
+      userId,
+      text,
+      date,
+      time
+    })
+
+    server.markModified('channels')
+
+    await server.save()
+
+    const message = {
+      userName,
+      userId,
+      text,
+      date,
+      time
+    }
+
+    return message
   }
 }

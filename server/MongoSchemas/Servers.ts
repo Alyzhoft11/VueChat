@@ -4,6 +4,14 @@ interface Channels {
   channelName: string;
 }
 
+interface Messages {
+  userName: string
+  userId: string
+  text: string
+  date: string
+  time: string
+}
+
 declare interface Servers extends Document {
   serverName: string;
   imageURL: string;
@@ -20,7 +28,10 @@ const ServersSchema = new mongoose.Schema({
   ownerId: String,
   channels: {
     type: Array,
-    default: [{channelName: "General"}]
+    default: [{
+        channelName: "General",
+        messages: []
+      }]
   }
 });
 

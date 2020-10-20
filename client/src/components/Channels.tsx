@@ -17,8 +17,6 @@ function Channels() {
     })[0].channels;
   }
 
-  console.log(channels);
-
   let modal: any;
   if (showModal) {
     modal = (

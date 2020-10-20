@@ -26,8 +26,6 @@ function CreateChannel({ onClose }: Props) {
 
   if (!loading) {
     if (data != undefined) {
-      //   addServerState(data.addServer);
-      console.log(data);
       onClose();
     }
   }

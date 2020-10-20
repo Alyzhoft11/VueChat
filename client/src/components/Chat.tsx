@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import 'moment';
+import { LocalDate, LocalTime } from '@js-joda/core';
 import { gql, useMutation, useQuery } from '@apollo/client';
 import { useStoreState } from 'easy-peasy';
 
@@ -99,11 +99,7 @@ function Chat() {
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
-                  // addMessage({ variables: { userName: user.userName, userId: user.id, serverId: selectedServer, channelName: selectedChannel, text: message, date: $date, time: $time } });
-
-                  const d = new Date();
-                  console.log(moment.toDate);
-
+                  addMessage({ variables: { userName: user.userName, userId: user.id, serverId: selectedServer, channelName: selectedChannel, text: message, date: LocalDate.now().toString(), time: LocalTime.now().toString() } });
                   setMessage('');
                 }}
               >

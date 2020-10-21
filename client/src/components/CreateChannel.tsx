@@ -7,8 +7,8 @@ type Props = {
 };
 
 const ADD_CHANNEL = gql`
-  mutation addServer($serverId: String!, $channelName: String!) {
-    addChannel(serverId: $serverId, channelName: $channelName) {
+  mutation addChannel($serverId: String!, $channelName: String!, $topic: String!) {
+    addChannel(serverId: $serverId, channelName: $channelName, topic: $topic) {
       id
       serverName
       channels {
@@ -53,7 +53,7 @@ function CreateChannel({ onClose }: Props) {
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
-                  addChannel({ variables: { serverId: selectedServer, channelName: channelName } });
+                  addChannel({ variables: { serverId: selectedServer, channelName: channelName, topic: selectedServer } });
 
                   setChannelName('');
                 }}

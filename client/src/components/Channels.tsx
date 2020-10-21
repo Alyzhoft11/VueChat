@@ -2,6 +2,26 @@ import React, { useState } from 'react';
 import { useStoreActions, useStoreState } from 'easy-peasy';
 import CreateChannel from './CreateChannel';
 import Channel from './Channel';
+import { gql, useQuery, useSubscription } from '@apollo/client';
+
+const CHANNEL_SUBSCRIPTION = gql`
+  subscription subscriptionChannel($topic: String!) {
+    subscriptionChannel(topic: $topic) {
+      id
+      channels {
+        channelName
+      }
+    }
+  }
+`;
+
+const GET_CHANNELS = gql`
+  query getChannels($serverId: String!) {
+    getChannels(serverId: $serverId) {
+      channelName
+    }
+  }
+`;
 
 function Channels() {
   const [showModal, setShowModal] = useState(false);
@@ -10,11 +30,16 @@ function Channels() {
   const selectedChannel = useStoreState((state) => state.user.selectedChannel);
   const setSelectedChannel = useStoreActions<any, any>((action) => action.user.setSelectedChannel);
 
+  const { data: updatedData, loading } = useSubscription(CHANNEL_SUBSCRIPTION, { variables: { topic: selectedServer } });
+  const { data } = useQuery(GET_CHANNELS, { variables: { serverId: selectedServer } });
+
+  // console.log(data.getChannels);
+
   let channels: any = [];
   if (servers.length > 0) {
-    channels = servers.filter((server: any) => {
-      return server.id == selectedServer;
-    })[0].channels;
+    if (data != undefined) {
+      channels = updatedData != undefined && updatedData.subscriptionChannel.id == selectedServer ? updatedData.subscriptionChannel.channels : data.getChannels;
+    }
   }
 
   let modal: any;

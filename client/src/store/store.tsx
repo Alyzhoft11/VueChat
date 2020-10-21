@@ -12,11 +12,20 @@ interface serverObject {
   serverName: string;
   imageURL: string;
   ownerId: string;
-  channels: channelsObject;
+  channels: channelsObject[];
 }
 
 interface channelsObject {
   channelName: string;
+  messages: messagesObject[];
+}
+
+interface messagesObject {
+  userId: string;
+  userName: string;
+  text: string;
+  date: string;
+  time: string;
 }
 
 interface UserModel {

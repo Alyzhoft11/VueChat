@@ -8,8 +8,10 @@ import { buildSchema } from 'type-graphql';
 import { UserResolver } from '../Resolvers/userResolver';
 import { MessageResolver } from '../Resolvers/messageResolver';
 import { ServerResolver } from '../Resolvers/serverResolver'
+import { createServer } from 'http';
 
 const startServer = async () => {
+  const PORT = 4000
   const app = express();
 
   app.use(cors())
@@ -20,15 +22,19 @@ const startServer = async () => {
     validate: false
   });
 
-  const server = new ApolloServer({ schema });
+  const apolloServer = new ApolloServer({ schema });
 
-  server.applyMiddleware({ app });
+  apolloServer.applyMiddleware({ app });
 
   await mongoose.connect('mongodb://localhost/vueChat', { useNewUrlParser: true, useUnifiedTopology: true });
 
-  app.listen(4000, () => {
-    console.log(`Server is running http://localhost:4000${server.graphqlPath}`);
-  });
+  const server = createServer(app);
+  apolloServer.installSubscriptionHandlers(server)
+
+  server.listen(PORT, () => {
+    console.log(`Server ready at http://localhost:${PORT}${apolloServer.graphqlPath}`)
+    console.log(`Subscriptions ready at ws://localhost:${PORT}${apolloServer.subscriptionsPath}`)
+  })
 };
 
 startServer();

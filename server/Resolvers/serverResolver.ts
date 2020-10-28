@@ -1,10 +1,9 @@
 import { Arg, Mutation, PubSub, PubSubEngine, Query, Resolver, Root, Subscription } from 'type-graphql';
+import mongoose from 'mongoose'
 import { Server } from '../types/serverType';
 import { Channels } from '../types/channelsType';
-import { Message } from '../types/messageType';
 import Servers from '../MongoSchemas/Servers';
 import Users from '../MongoSchemas/Users';
-import { ARRAY_CONTAINS } from 'class-validator';
 
 @Resolver()
 export class ServerResolver {
@@ -48,6 +47,7 @@ export class ServerResolver {
     const server = await Servers.findById(serverId)
 
     server.channels.push({
+      id: mongoose.Types.ObjectId(),
       channelName: channelName,
       messages: []
     })
@@ -60,15 +60,13 @@ export class ServerResolver {
     return server
   }
 
-  @Query(() => [Channels])
+  @Query(() => Server)
   async getChannels(
     @Arg('serverId') serverId: string,
-  ): Promise<Channels[] | null> {
+  ): Promise<Server | null> {
     const server = await Servers.findById(serverId)
 
-    const channels = server.channels
-
-    return channels
+    return server
   }
 
   @Query(() => Channels)
@@ -83,19 +81,23 @@ export class ServerResolver {
     return channel
   }
 
-  @Mutation(() => Message)
+  @Mutation(() => Boolean)
   async addMessage(
+    @PubSub() pubSub: PubSubEngine,
     @Arg('serverId') serverId: string,
     @Arg('channelName') channelName: string,
     @Arg('userId') userId: string,
     @Arg('userName') userName: string,
     @Arg('text') text: string,
     @Arg('date') date: string,
-    @Arg('time') time: string
-  ): Promise<Message> {
+    @Arg('time') time: string,
+    @Arg('topic') topic: string
+  ): Promise<Boolean> {
     const server = await Servers.findById(serverId)
 
-    server.channels.find((c: any) => c.channelName === channelName).messages.push({
+    const channel = server.channels.find((c: any) => c.channelName === channelName)
+
+    channel.messages.push({
       userName,
       userId,
       text,
@@ -107,15 +109,10 @@ export class ServerResolver {
 
     await server.save()
 
-    const message = {
-      userName,
-      userId,
-      text,
-      date,
-      time
-    }
+    const payload: any = { channel };
+    await pubSub.publish(topic, payload);
 
-    return message
+    return true
   }
 
   @Subscription({
@@ -126,5 +123,15 @@ export class ServerResolver {
     @Root() { server }: any,
   ): Server { 
     return server;
+  }
+
+  @Subscription({
+    topics: ({ args }) => args.topic,
+  })
+  subscriptionMessage(
+    @Arg("topic") topic: string,
+    @Root() { channel }: any,
+  ): Channels { 
+    return channel;
   }
 }

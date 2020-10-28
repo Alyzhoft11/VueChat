@@ -29,6 +29,7 @@ const ServersSchema = new mongoose.Schema({
   channels: {
     type: Array,
     default: [{
+        id: mongoose.Types.ObjectId(),
         channelName: "General",
         messages: []
       }]

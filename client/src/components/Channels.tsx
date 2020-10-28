@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useStoreActions, useStoreState } from 'easy-peasy';
 import CreateChannel from './CreateChannel';
 import Channel from './Channel';
@@ -18,7 +18,10 @@ const CHANNEL_SUBSCRIPTION = gql`
 const GET_CHANNELS = gql`
   query getChannels($serverId: String!) {
     getChannels(serverId: $serverId) {
-      channelName
+      id
+      channels {
+        channelName
+      }
     }
   }
 `;
@@ -30,17 +33,29 @@ function Channels() {
   const selectedChannel = useStoreState((state) => state.user.selectedChannel);
   const setSelectedChannel = useStoreActions<any, any>((action) => action.user.setSelectedChannel);
 
-  const { data: updatedData, loading } = useSubscription(CHANNEL_SUBSCRIPTION, { variables: { topic: selectedServer } });
-  const { data } = useQuery(GET_CHANNELS, { variables: { serverId: selectedServer } });
-
-  // console.log(data.getChannels);
+  // const { data: updatedData, loading } = useSubscription(CHANNEL_SUBSCRIPTION, { variables: { topic: selectedServer } });
+  const { data, subscribeToMore } = useQuery(GET_CHANNELS, { variables: { serverId: selectedServer } });
 
   let channels: any = [];
   if (servers.length > 0) {
     if (data != undefined) {
-      channels = updatedData != undefined && updatedData.subscriptionChannel.id == selectedServer ? updatedData.subscriptionChannel.channels : data.getChannels;
+      channels = data.getChannels.channels;
     }
   }
+
+  useEffect(() =>
+    subscribeToMore({
+      document: CHANNEL_SUBSCRIPTION,
+      variables: { topic: selectedServer },
+      updateQuery: (prev, { subscriptionData }) => {
+        if (!subscriptionData.data) return prev;
+        const data = subscriptionData.data;
+        return Object.assign({}, prev, {
+          allChannels: [data.subscriptionChannel.channels, ...prev.getChannels.channels].slice(0, 20),
+        });
+      },
+    }),
+  );
 
   let modal: any;
   if (showModal) {
